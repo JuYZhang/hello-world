@@ -1,0 +1,77 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+Scientific Question: Is the structural similarity between the Hemagglutinin (HA) of H1N1 and that of H5N1 potentially explaining the reason why the avian influenza virus H5N1 can also infect human beings?
+
+Background: 
+H1N1 and H5N1 are two types of influenza virus. Hemagglutinin (HA) is a glycoprotein that can be found on the surface of influenxa viruses and it is responsible for the binding the viruses to the target cells and the fusion of viral envelope and target cell membrane.
+The DNA sequences of H1N1 and H5N1 are achieved from NCBI. The amino acid sequences of H1N1 and H5N1 are achieved from PDB.
+
+Scientific Hypothesis: If there is a structural similarity between the HA of H1N1 and that of H5N1, then H5N1 can potentially infect human beings as the same way that H1N1 infects human beings.
+
+Bioinformatics Methods and Plotting Analysis: 
+Pairwise sequence alignment is done to access the percent of similarity between the amino acid sequence of HA of H1N1 and that of H5N1. Then, homology modeling is performed to create the structures of the HA of H1N1 and that of H5N1. Heatmap will be created to visualize the results of pairwise sequence alignment. Data are directly download from NCBI and PDB.
+
+Loading Package
+```{r}
+library(BiocManager)
+# To load all the packages below, BiocManager needs to be loaded first
+library(Biostrings)
+# Biostrings is a pakcage for pairwise sequence alignment
+library(bio3d)
+# bio3d is a package for homology modeling
+
+```
+
+Pairwise Sequence Alignment
+
+Pairwise sequence alignment calculate the structural similarity between the HA of H1N1 and that of H5N1.
+Fasta data of amino acid sequences are needed for pairwise sequence alignment.
+```{r}
+# Read amino acid seauence of H1N1 HA
+H1N1_AAsequence <- read.fasta(file = "AAsequence-H1N1.fasta")
+# H1N1_AAsequence is the amino acid sequence of H1N1 HA
+H1N1_AAseq <- readAAStringSet("AAsequence-H1N1.fasta")
+# H1N1_AAseq is the amino acid sequence of H1N1 HA
+
+# Read amino acid seauence of H5N1 HA
+H5N1_AAsequence <- read.fasta(file = "AAsequence-H5N1.fasta")
+# H5N1_AAsequence is the amino acid sequence of H5N1 HA
+H5N1_AAseq <- readAAStringSet("AAsequence-H5N1.fasta")
+# H5N1_AAsequence is the amino acid sequence of H5N1 HA
+
+# Perform pariwise sequence alignment of the HA of H1N1 and that of H5N1
+pairwiseAlignment(AAString("H1N1_AAsequence"), AAString("H5N1_AAsequence"), substitutionMatrix = "BLOSUM50", gapOpening = 0, gapExtension = 8)
+
+
+```
+
+Heatmap
+
+Heatmap is used to show the results of pairwise sequence alignment.
+```{r}
+# Create a heatmap
+heatmap()
+```
+
+Homology Modeling and Structural Bioinformatics
+
+Homology modeling computationlly models the structures of the HAs of H1N1 and H5N1.
+Fasta data of DNA sequences are needed for homology modeling.
+```{r}
+# Read DNA seauence of H1N1 HA
+H1N1_DNAsequence <- read.fasta(file = "Gene-H1N1.fasta")
+# H1N1_AAsequence is the DNA sequence of H1N1 HA
+H1N1_DNAseq <- readDNAStringSet("Gene-H1N1.fasta")
+# H1N1_AAseq is the DNA sequence of H1N1 HA
+
+# Read DNA seauence of H5N1 HA
+H5N1_DNAsequence <- read.fasta(file = "Gene-H5N1.fasta")
+# H5N1_AAsequence is the DNA sequence of H5N1 HA
+H5N1_DNAseq <- readDNAStringSet("Gene-H5N1.fasta")
+# H5N1_AAsequence is the DNA sequence of H5N1 HA
+```
+
+
